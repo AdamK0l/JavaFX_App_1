@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -13,7 +13,10 @@
               <content>
                   <BorderPane>
                      <center>
-                        <ImageView fx:id="imageView1" fitHeight="294.0" fitWidth="470.0" onDragDropped="#imageViewDragDropped1" onDragOver="#imageViewDragOver" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                        <ImageView fx:id="imageView1" fitHeight="294.0" fitWidth="470.0" onDragDropped="#imageViewDragDropped1" onDragOver="#imageViewDragOver" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor></ImageView>
                      </center>
                      <right>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -48,26 +51,22 @@
               <content>
                   <BorderPane>
                      <center>
-                        <Label text="Jiří Janásek" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                        </Label>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label layoutX="272.0" layoutY="116.0" text="Adam Koláček" />
+                              <Label layoutX="281.0" layoutY="145.0" text="Jiří Janásek" />
+                              <Label layoutX="271.0" layoutY="177.0" text="Patrik Kalivoda" />
+                              <Label layoutX="273.0" layoutY="211.0" text="(Štěpán Adler)" />
+                           </children>
+                        </AnchorPane>
                      </center>
-                     <bottom>
-                        <Label text="Patrik Kalivoda" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="200.0" />
-                           </BorderPane.margin>
-                        </Label>
-                     </bottom>
-                     <top>
-                        <Label text="Adam Koláček" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets top="100.0" />
-                           </BorderPane.margin>
-                        </Label>
-                     </top></BorderPane>
+                     <right>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="closeWindow21" layoutX="128.0" layoutY="2.0" mnemonicParsing="false" onAction="#closeWindow" text="Exit" />
+                           </children>
+                        </AnchorPane>
+                     </right></BorderPane>
               </content>
           </Tab>
         </tabs>
