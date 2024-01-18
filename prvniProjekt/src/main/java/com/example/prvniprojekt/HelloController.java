@@ -2,14 +2,16 @@ package com.example.prvniprojekt;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.*;
 import javafx.scene.input.DragEvent;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.channels.FileChannel;
 
 public class HelloController {
 
@@ -56,5 +58,64 @@ public class HelloController {
     @FXML
     void closeWindow (ActionEvent event) {
             javafx.application.Platform.exit();
+    }
+
+    @FXML
+    void blackWhite (ActionEvent event) {
+        ColorAdjust colorAdjust1= new ColorAdjust();
+        colorAdjust1.setSaturation(-1);
+        imageView2.setEffect(colorAdjust1);
+    }
+
+    @FXML
+    void invertColours(ActionEvent event) {
+        Image originalImage = imageView1.getImage();
+        int width = (int) originalImage.getWidth();
+        int height = (int) originalImage.getHeight();
+        WritableImage invertedImage = new WritableImage(width, height);
+        PixelWriter pixelWriter = invertedImage.getPixelWriter();
+        PixelReader pixelReader = originalImage.getPixelReader();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = pixelReader.getColor(x, y);
+
+                Color invertedColor = Color.color(1.0 - color.getRed(), 1.0 - color.getGreen(), 1.0 - color.getBlue());
+
+                pixelWriter.setColor(x, y, invertedColor);
+            }
+        }
+        imageView1.setImage(invertedImage);
+
+    }
+
+    public void save(ActionEvent event) {
+        if (imageView1.getImage() != null) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Image");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png"));
+
+            File file = fileChooser.showSaveDialog(imageView1.getScene().getWindow());
+
+            if (file != null) {
+                try {
+                    FileChannel source = new FileInputStream(imageView1.getImage().getUrl().replace("file:/", "")).getChannel();
+                    FileChannel destination = new FileOutputStream(file).getChannel();
+                    destination.transferFrom(source, 0, source.size());
+                    source.close();
+                    destination.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @FXML
+    void clearImageView1(ActionEvent event) {
+        imageView1.setImage(null);
+    }
+    @FXML
+    void clearImageView2(ActionEvent event) {
+        imageView2.setImage(null);
     }
 }
